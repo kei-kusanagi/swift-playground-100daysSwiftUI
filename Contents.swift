@@ -113,3 +113,117 @@ let theme = Theme.dark
 
 let background = theme == .dark ? "black" : "white"
 print(background)
+
+
+// Día 6 – Bucles, resumen y punto de control 3
+
+
+let platforms = ["iOS", "macOS", "tvOS", "watchOS"]
+
+for os in platforms {
+    print("Swift works great on \(os).")
+}
+
+for bucleKeiKusanagi in platforms {
+    print("Swift works great on \(bucleKeiKusanagi).")
+}
+
+
+for i in 1...10 {
+    print("7 x \(i) is \(7 * i)")
+}
+
+for i in 0...10 {
+    print()
+    print("la tabla del \(i):")
+
+    for j in 0...10 {
+        print("  \(i) x \(j) es \(j * i)")
+    }
+
+    
+}
+
+
+for i in 1...5 {
+    print("Contar de forma continua del 1 al 5: \(i)")
+}
+
+print()
+
+for i in 1..<5 {
+    print("Contar del 1 a antes del 5: \(i)")
+}
+
+
+var lyric = "Haters gonna"
+
+for _ in 1...5 {
+    lyric += " hate"
+}
+
+print(lyric)
+
+
+// Bucle While
+
+
+var countdown = 10
+
+while countdown > 0 {
+    print("\(countdown)…")
+    countdown -= 1
+}
+
+print("Rocketo PUNCH!!!!")
+
+
+let id = Int.random(in: 1...1000)
+
+let amount = Double.random(in: 0...1)
+
+
+// ejemplo dados con bucle while
+
+// crea un número entero para almacenar nuestro rol
+var roll = 0
+
+// sigue dando vueltas hasta llegar a 20
+while roll != 20 {
+    // tira un dado nuevo e imprime lo que era
+    roll = Int.random(in: 1...20)
+    print("I rolled a \(roll)")
+}
+
+// si estamos aquí significa que el ciclo termino: ¡obtuvimos un 20!
+print("Critical hit!")
+
+
+// como omitir elementos del bucle con pausa y continuar
+let filenames = ["me.jpg", "work.txt", "sophie.jpg", "logo.psd"]
+
+for filename in filenames {
+    if filename.hasSuffix(".jpg") == false {
+        continue
+    }
+
+    print("Found picture: \(filename)")
+}
+
+
+
+let number1 = 4
+let number2 = 14
+var multiples = [Int]()
+
+for i in 1...100_000 {
+    if i.isMultiple(of: number1) && i.isMultiple(of: number2) {
+        multiples.append(i)
+
+        if multiples.count == 20 {
+            break
+        }
+    }
+}
+
+print(multiples)
