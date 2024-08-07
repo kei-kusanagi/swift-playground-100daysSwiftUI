@@ -115,7 +115,7 @@ let background = theme == .dark ? "black" : "white"
 print(background)
 
 
-// Día 6 – Bucles, resumen y punto de control 3
+/// Día 6 – Bucles, resumen y punto de control 3
 
 
 let platforms = ["iOS", "macOS", "tvOS", "watchOS"]
@@ -186,13 +186,13 @@ let amount = Double.random(in: 0...1)
 // ejemplo dados con bucle while
 
 // crea un número entero para almacenar nuestro rol
-var roll = 0
+var roll1 = 0
 
 // sigue dando vueltas hasta llegar a 20
-while roll != 20 {
+while roll1 != 20 {
     // tira un dado nuevo e imprime lo que era
-    roll = Int.random(in: 1...20)
-    print("I rolled a \(roll)")
+    roll1 = Int.random(in: 1...20)
+    print("I rolled a \(roll1)")
 }
 
 // si estamos aquí significa que el ciclo termino: ¡obtuvimos un 20!
@@ -227,3 +227,180 @@ for i in 1...100_000 {
 }
 
 print(multiples)
+
+
+/// Día 7 – Funciones, parámetros y valores de retorno
+
+
+print("¡Bienvenido a mi aplicación!")
+print("De forma predeterminada, esta imprime una conversión")
+print("de centímetros a pulgadas, pero tú")
+print("también puede establecer un rango personalizado si lo deseas.")
+
+func showWelcome(){
+    print("¡Bienvenido a mi aplicación!")
+    print("De forma predeterminada, esta imprime una conversión")
+    print("de centímetros a pulgadas, pero tú")
+    print("también puede establecer un rango personalizado si lo deseas.")
+}
+
+showWelcome()
+showWelcome()
+
+
+let number = 100
+
+if number.isMultiple(of: 2) {
+    print("Even")
+} else {
+    print("Odd")
+}
+
+
+let roll = Int.random(in: 1...20)
+
+//let roll = Int.random()
+
+
+func printTimesTables(number: Int, end: Int) {
+    for i in 1...end {
+        print("\(number) x \(i) = \(i * number)")
+    }
+}
+
+printTimesTables(number: 5, end: 20)
+
+
+// Cómo devolver valores de funciones
+
+let root = sqrt(169)
+print(root)
+
+func rollDice() -> Int {
+    return Int.random(in: 1...6)
+}
+
+//let result = rollDice()
+//print(result)
+
+print(rollDice())
+
+
+func comparacion(cadena1: String, cadena2: String)-> Bool{
+
+    let cadena1 = convertirArray(cadena: cadena1)
+    let cadena2 = convertirArray(cadena: cadena2)
+    if (cadena1==cadena2){
+        return true
+    } else {
+        return false
+    }
+    
+    
+}
+
+
+func convertirArray(cadena: String) -> String{
+    let caracteres = Array(cadena)
+    let caracteresOrdenados = caracteres.sorted()
+    let cadenaOrdenada = String(caracteresOrdenados)
+    return cadenaOrdenada
+}
+
+comparacion(cadena1: "abc", cadena2: "cba")
+
+
+/// bueno esa fue mi solucion, la del curso fue esta, lo que se diferencio es que segun yo devia convertirlos en array, pero bueno de menos ya practique como usar una funcion dentro de otra jajaja :p
+
+//func areLettersIdentical(string1: String, string2: String) -> Bool {
+//    let first = string1.sorted()
+//    let second = string2.sorted()
+//    return first == second
+//}
+
+/// y s epodria hacr aun mas corto con
+
+func areLettersIdentical(string1: String, string2:String) -> Bool{
+    return string1.sorted() == string2.sorted()
+}
+
+/// y si la funcion solo tiene una liena de codigo podemos omit el return y solo dejarlo
+
+func areLettersIdentical2(string1: String, string2:String) -> Bool{
+    string1.sorted() == string2.sorted()
+}
+
+areLettersIdentical(string1: "abc", string2: "cba")
+
+areLettersIdentical2(string1: "abc", string2: "cba")
+
+
+func pythagoras(a: Double, b: Double) -> Double {
+    let input = a * a + b * b
+    let root = sqrt(input)
+    return root
+}
+
+let c = pythagoras(a: 3, b: 4)
+print(c)
+
+// ahora como prueba nos pone a reducirlo a una sola linea pa quitar el return, segun yo es asi
+
+func pythagorasshort(a: Double, b: Double) -> Double {
+    sqrt(a * a + b * b)
+}
+
+print(pythagoras(a: 3, b: 4))
+
+
+/// Cómo devolver múltiples valores de funciones
+
+
+//func getUser() -> (firstName: String, lastName: String) {
+//    (firstName: "Taylor", lastName: "Swift")
+//}
+//
+//let user = getUser()
+//print("Name: \(user.firstName) \(user.lastName)")
+
+
+//func getUser() -> (String, String) {
+//    ("Taylor", "Swift")
+//}
+//
+//let user = getUser()
+//print("Name: \(user.0) \(user.1)")
+
+func getUser() -> (firstName: String, lastName: String) {
+    (firstName: "Taylor", lastName: "Swift")
+}
+//
+//let user = getUser()
+//let firstName = user.firstName
+//let lastName = user.lastName
+
+let (firstName, lastName) = getUser()
+print("Name: \(firstName) \(lastName)")
+
+
+/// Cómo personalizar etiquetas de parámetros
+
+
+let lyric1 = "I see a red door and I want it painted black"
+print(lyric1.hasPrefix("I see"))
+
+
+//func isUppercase(string: String) -> Bool {
+//    string == string.uppercased()
+//}
+//
+//let string = "HELLO, WORLD"
+//let result = isUppercase(string: string)
+
+func isUppercase(_ string: String) -> Bool {
+    string == string.uppercased()
+}
+
+let string = "HELLO, WORLD"
+let result = isUppercase(string)
+ 
