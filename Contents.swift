@@ -262,13 +262,13 @@ let roll = Int.random(in: 1...20)
 //let roll = Int.random()
 
 
-func printTimesTables(number: Int, end: Int) {
-    for i in 1...end {
-        print("\(number) x \(i) = \(i * number)")
-    }
-}
-
-printTimesTables(number: 5, end: 20)
+//func printTimesTables(number: Int, end: Int) {
+//    for i in 1...end {
+//        print("\(number) x \(i) = \(i * number)")
+//    }
+//}
+//
+//printTimesTables(number: 5, end: 20)
 
 
 // Cómo devolver valores de funciones
@@ -403,4 +403,109 @@ func isUppercase(_ string: String) -> Bool {
 
 let string = "HELLO, WORLD"
 let result = isUppercase(string)
- 
+
+
+/// Día 8 : valores predeterminados, funciones de lanzamiento y punto de control 4
+
+
+func printTimesTables(for number: Int, end: Int = 10) {
+    for i in 1...end {
+        print("\(i) x \(number) is \(i * number)")
+    }
+}
+
+printTimesTables(for: 5, end: 20)
+printTimesTables(for: 8)
+
+
+var characters = ["Lana", "Pam", "Ray", "Sterling"]
+print(characters.count)
+characters.removeAll()
+print(characters.count)
+
+characters.removeAll(keepingCapacity: true)
+
+// Cómo manejar errores en funciones
+
+enum PasswordError: Error {
+    case short, obvious
+}
+
+
+func checkPassword(_ password: String) throws -> String {
+    if password.count < 5 {
+        throw PasswordError.short
+    }
+
+    if password == "12345" {
+        throw PasswordError.obvious
+    }
+
+    if password.count < 8 {
+        return "OK"
+    } else if password.count < 10 {
+        return "Good"
+    } else {
+        return "Excellent"
+    }
+}
+
+
+//try checkPassword("hola")
+// esto nos regreso 
+//>Playground execution terminated: An error was thrown and was not caught:
+//__lldb_expr_21.PasswordError.short
+
+let cadena = "12345"
+
+do {
+    let result = try checkPassword(cadena)
+    print("Password rating: \(result)")
+} catch PasswordError.short {
+    print("Please use a longer password.")
+} catch PasswordError.obvious {
+    print("I have the same combination on my luggage!")
+} catch {
+    print("There was an error.\(error.localizedDescription)")
+}
+
+/// Punto de control 4
+///El desafío es este: escribir una función que acepte un número entero del 1 al 10,000 y devuelva la raíz cuadrada entera de ese número. Suena fácil, pero hay algunos inconvenientes:
+
+///- No puedes usar la función incorporada de Swift sqrt()o similar; necesitas encontrar la raíz cuadrada tú mismo.
+///- Si el número es menor que 1 o mayor que 10,000, debería generar un error de "fuera de límites".
+///- Solo debes considerar raíces cuadradas enteras; no te preocupes si la raíz cuadrada de 3 es 1,732, por ejemplo.
+///- Si no puede encontrar la raíz cuadrada, arroja un error de "sin raíz".
+
+
+enum RaizCuadradaError: Error {
+    case fueraDeLimites
+    case sinRaiz
+}
+
+func raizCuadrada(_ numero: Int) throws -> Int {
+    guard numero >= 1 && numero <= 10000 else {
+        throw RaizCuadradaError.fueraDeLimites
+    }
+
+    for i in 1...100 {
+        if i * i == numero {
+            return i
+        }
+    }
+
+    throw RaizCuadradaError.sinRaiz
+}
+
+
+
+do {
+    let resultado = try raizCuadrada(10000)
+    print("La rais cuadrada entera es \(resultado)")
+} catch RaizCuadradaError.fueraDeLimites {
+    print("El numero está fuera de los límites permitidos.")
+} catch RaizCuadradaError.sinRaiz {
+    print("No se encontro una raiz cuadrada entera.")
+} catch {
+    print("Ocurrio un error inesperado: \(error).")
+}
