@@ -509,3 +509,169 @@ do {
 } catch {
     print("Ocurrio un error inesperado: \(error).")
 }
+
+
+/// Day 9 – Closures, passing functions into functions, and checkpoint 5
+
+//func greetUser() {
+//    print("Hi there!")
+//}
+//
+//greetUser()
+//
+//var greetCopy = greetUser
+//greetCopy()
+
+//let decirHola = {
+//    print("holaaaa")
+//}
+//
+//decirHola()
+
+let decirHola = { (name: String) -> String in
+    "Hola \(name)"
+}
+
+print(decirHola("Juancho"))
+
+func getUserData(for id: Int) -> String {
+    if id == 1989 {
+        return "Taylor Swift"
+    } else {
+        return "Anonymous"
+    }
+}
+
+let data: (Int) -> String = getUserData
+let user = data(1989)
+print(user)
+
+
+let team = ["Gloria", "Suzanne", "Piper", "Tiffany", "Tasha"]
+let sortedTeam = team.sorted()
+print(sortedTeam)
+
+
+//func captainFirstSorted(name1: String, name2: String) -> Bool {
+//    if name1 == "Suzanne" {
+//        return true
+//    } else if name2 == "Suzanne" {
+//        return false
+//    }
+//
+//    return name1 < name2
+//}
+//
+//let captainFirstTeam = team.sorted(by: captainFirstSorted)
+//print(captainFirstTeam)
+
+//let captainFirstTeam = team.sorted(by: { (name1: String, name2: String) -> Bool in
+//    if name1 == "Suzanne" {
+//        return true
+//    } else if name2 == "Suzanne" {
+//        return false
+//    }
+//
+//    return name1 < name2
+//})
+
+
+//
+//let captainFirstTeam = team.sorted { name1, name2 in
+//    if name1 == "Suzanne" {
+//        return true
+//    } else if name2 == "Suzanne" {
+//        return false
+//    }
+//
+//    return name1 < name2
+//}
+//
+
+let captainFirstTeam = team.sorted {
+    if $0 == "Suzanne" {
+        return true
+    } else if $1 == "Suzanne" {
+        return false
+    }
+
+    return $0 < $1
+}
+
+print(captainFirstTeam)
+
+let tOnly = team.filter { $0.hasPrefix("T") }
+print(tOnly)
+
+
+let uppercaseTeam = team.map { $0.uppercased() }
+print(uppercaseTeam)
+
+
+
+func greetUser() {
+    print("Hi there!")
+}
+
+greetUser()
+
+var greetCopy: () -> Void = greetUser
+greetCopy()
+
+
+
+func makeArray(size: Int, using generator: () -> Int) -> [Int] {
+    var numbers = [Int]()
+
+    for _ in 0..<size {
+        let newNumber = generator()
+        numbers.append(newNumber)
+    }
+
+    return numbers
+}
+
+
+let rolls = makeArray(size: 50) {
+    Int.random(in: 1...20)
+}
+
+print(rolls)
+
+
+func generateNumber() -> Int {
+    Int.random(in: 1...20)
+}
+
+let newRolls = makeArray(size: 50, using: generateNumber)
+print(newRolls)
+
+
+func doImportantWork(first: () -> Void, second: () -> Void, third: () -> Void) {
+    print("About to start first work")
+    first()
+    print("About to start second work")
+    second()
+    print("About to start third work")
+    third()
+    print("Done!")
+}
+
+
+let luckyNumbers = [7, 4, 38, 21, 16, 15, 12, 33, 31, 49]
+
+
+let resultado = luckyNumbers
+    .filter { (number: Int) -> Bool in
+        return !number.isMultiple(of: 2)
+    }
+    .sorted { (first: Int, second: Int) -> Bool in
+        return first < second
+    }
+    .map { (number: Int) -> String in
+        return "\(number) is a lucky number"
+    }
+
+resultado.forEach { (line: String) in
+    print(line)
+}
