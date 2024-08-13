@@ -772,3 +772,193 @@ var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
 archer.vacationTaken += 4
 archer.vacationRemaining = 5
 print(archer.vacationAllocated)
+
+
+///  Día 11 – Control de acceso, propiedades y métodos estáticos y punto de control 6
+///Cómo limitar el acceso a datos internos mediante el control de acceso
+
+//struct BankAccount {
+//    var funds = 0
+//
+//    mutating func deposit(amount: Int) {
+//        funds += amount
+//    }
+//
+//    mutating func withdraw(amount: Int) -> Bool {
+//        if funds >= amount {
+//            funds -= amount
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+//}
+//
+//
+//var miCuenta = BankAccount()
+//
+//print(miCuenta.funds)
+//
+//miCuenta.deposit(amount: 30000)
+//let success = miCuenta.withdraw(amount: 200)
+//
+//if success {
+//    print("Withdrew money successfully")
+//} else {
+//    print("Failed to get the money")
+//}
+//print(miCuenta.funds)
+//print(success)
+//
+//miCuenta.funds += 10000000000000
+//print(miCuenta.funds)
+
+
+struct BankAccount {
+    // Añadimos private
+    private var funds = 0
+
+    mutating func deposit(amount: Int) {
+        funds += amount
+    }
+
+    mutating func withdraw(amount: Int) -> Bool {
+        if funds >= amount {
+            funds -= amount
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+
+var miCuenta = BankAccount()
+
+// ya no me deja acceder a los fondos
+//print(miCuenta.funds)
+
+miCuenta.deposit(amount: 30000)
+let success = miCuenta.withdraw(amount: 200)
+
+if success {
+    print("Withdrew money successfully")
+} else {
+    print("Failed to get the money")
+}
+//print(miCuenta.funds)
+print(success)
+
+//miCuenta.funds += 10000000000000
+//print(miCuenta.funds)
+
+
+struct datosTakeshi{
+    static let raza = "electrico proque es bien corriente"
+    static var comidaFav = "Nupec"
+    static let horasSueno = 18
+}
+
+
+print(datosTakeshi.comidaFav)
+datosTakeshi.comidaFav = "sobresitos"
+
+print(datosTakeshi.comidaFav)
+
+
+struct School {
+    static var studentCount = 0
+
+    static func add(student: String) {
+        print("\(student) joined the school.")
+        studentCount += 1
+    }
+}
+
+School.add(student: "Taylor Swift")
+print(School.studentCount)
+
+
+struct AppData {
+    static let version = "1.3 beta 2"
+    static let saveFilename = "settings.json"
+    static let homeURL = "https://www.hackingwithswift.com"
+}
+
+
+struct Employee2 {
+    let username: String
+    let password: String
+
+    static let example = Employee2(username: "cfederighi", password: "hairforceone")
+}
+struct Unwrap {
+    static let appURL = "https://itunes.apple.com/app/id1440611372"
+}
+
+//static var entropy = Int.random(in: 1...1000)
+//
+//static func getEntropy() -> Int {
+//    entropy += 1
+//    return entropy
+//}
+//private static var entropy = Int.random(in: 1...1000)
+
+
+///Punto de control 6
+
+struct Car {
+
+    let model: String
+    let numberOfSeats: Int
+    
+
+    private var currentGear: Int
+    
+
+    init(model: String, numberOfSeats: Int, currentGear: Int = 1) {
+        self.model = model
+        self.numberOfSeats = numberOfSeats
+        
+
+        if currentGear >= 1 && currentGear <= 10 {
+            self.currentGear = currentGear
+        } else {
+            self.currentGear = 1
+        }
+    }
+    
+
+    mutating func shiftUp() {
+        if currentGear < 10 {
+            currentGear += 1
+        } else {
+            print("Ya estás en la marcha más alta.")
+        }
+    }
+    
+    // Método para cambiar la marcha hacia abajo
+    mutating func shiftDown() {
+        if currentGear > 1 {
+            currentGear -= 1
+        } else {
+            print("Ya estás en la marcha más baja.")
+        }
+    }
+    
+    // Método para obtener la marcha actual (pública)
+    func getCurrentGear() -> Int {
+        return currentGear
+    }
+}
+
+// Uso de la estructura
+var myCar = Car(model: "Toyota Corolla", numberOfSeats: 5, currentGear: 3)
+print("Marcha actual: \(myCar.getCurrentGear())")
+
+myCar.shiftUp()
+print("Marcha actual: \(myCar.getCurrentGear())")
+
+myCar.shiftDown()
+print("Marcha actual: \(myCar.getCurrentGear())")
+
