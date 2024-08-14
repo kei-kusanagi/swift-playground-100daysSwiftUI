@@ -962,3 +962,228 @@ print("Marcha actual: \(myCar.getCurrentGear())")
 myCar.shiftDown()
 print("Marcha actual: \(myCar.getCurrentGear())")
 
+
+/// Day 12 – Classes, inheritance, and checkpoint 7
+///
+//Cómo crear tus propias clases
+
+
+class Game {
+    var score = 0 {
+        didSet {
+            print("Score is now \(score)")
+        }
+    }
+}
+
+var newGame = Game()
+print(newGame.score)
+newGame.score += 10
+
+//Cómo hacer que una clase herede de otra
+
+class Employee3{
+    let hours: Int
+    
+    init(hours: Int){
+        self.hours = hours
+    }
+    func printSummary() {
+        print("I work \(hours) hours a day.")
+    }
+}
+
+class Developer: Employee3 {
+    func work() {
+        print("I'm writing code for \(hours) hours.")
+    }
+    override func printSummary() {
+        print("I'm a developer who will sometimes work \(hours) hours a day, but other times spend hours arguing about whether code should be indented using tabs or spaces.")
+    }
+}
+
+class Manager: Employee3 {
+    func work() {
+        print("I'm going to meetings for \(hours) hours.")
+    }
+}
+
+
+let robert = Developer(hours: 8)
+let joseph = Manager(hours: 10)
+robert.work()
+joseph.work()
+
+let novall = Developer(hours: 8)
+novall.printSummary()
+
+
+// Cómo agregar inicializadores para clases
+
+class Vehicle {
+    let isElectric: Bool
+
+    init(isElectric: Bool) {
+        self.isElectric = isElectric
+    }
+}
+
+class Carro: Vehicle {
+    let isConvertible: Bool
+
+    init(isElectric: Bool, isConvertible: Bool) {
+        self.isConvertible = isConvertible
+        super.init(isElectric: isElectric)
+    }
+}
+
+let teslaX = Carro(isElectric: true, isConvertible: false)
+
+
+// Cómo copiar clases
+
+
+//class User {
+//    var username = "Anonymous"
+//}
+
+
+var user1 = User()
+
+print(user1.username)
+
+var user2 = user1
+user2.username = "Taylor"
+
+print(user1.username)
+print(user2.username)
+
+
+class User {
+    var username = "Anonymous"
+
+    func copy() -> User {
+        let user = User()
+        user.username = username
+        return user
+    }
+}
+
+
+// Cómo crear un desinicializador para una clase
+
+
+class User2 {
+    let id: Int
+
+    init(id: Int) {
+        self.id = id
+        print("User \(id): I'm alive!")
+    }
+
+    deinit {
+        print("User \(id): I'm dead!")
+    }
+}
+
+var usuario = User2(id:234)
+print(usuario.id)
+
+for i in 1...3 {
+    let user = User2(id: i)
+    print("User \(user.id): I'm in control!")
+}
+
+
+var users = [User2]()
+
+for i in 1...3 {
+    let user = User2(id: i)
+    print("User \(user.id): I'm in control!")
+    users.append(user)
+}
+
+print("Loop is finished!")
+users.removeAll()
+print("Array is clear!")
+
+
+// Cómo trabajar con variables dentro de clases
+
+
+class User3 {
+    var name = "Paul"
+}
+
+let newUser = User3()
+newUser.name = "Taylor"
+print(newUser.name)
+
+
+var newUser1 = User3()
+newUser1.name = "Taylor"
+newUser1 = User3()
+print(newUser1.name)
+
+
+//Punto de control 7
+
+class Animal{
+    let patas: Int = 4
+    
+}
+
+class Dog: Animal {
+    func speak() {
+        print("Woof woof soy un perro!")
+    }
+}
+
+class Cat: Animal {
+    let Domesticable: Bool
+    
+    init(Domesticable: Bool) {
+        self.Domesticable = Domesticable
+    }
+    
+    func speak() {
+        print("Miau asi es!")
+    }
+}
+
+class Corgi: Dog {
+    override func speak() {
+        print("Woof! Soy un Corgi!")
+    }
+}
+
+class Poodle: Dog {
+    override func speak() {
+        print("Woof! Soy un Poodle!")
+    }
+}
+
+class Persian: Cat {
+    override func speak() {
+        print("Meow! Soy un gato Persa!")
+    }
+}
+
+class Lion: Cat {
+    override func speak() {
+        print("Roar! Soy un Leon!")
+    }
+}
+
+
+let corgi = Corgi()
+corgi.speak()
+
+let poodle = Poodle()
+poodle.speak()
+
+let persian = Persian(Domesticable: true)
+persian.speak()
+
+let lion = Lion(Domesticable: false)
+lion.speak()
