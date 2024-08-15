@@ -742,36 +742,36 @@ wings.printSummary()
 //print(archer.vacationRemaining)
 
 
-struct Employee {
-    let name: String
-    var vacationAllocated = 14
-    var vacationTaken = 0
+//struct Employee {
+//    let name: String
+//    var vacationAllocated = 14
+//    var vacationTaken = 0
 
 //    var vacationRemaining: Int {
 //        vacationAllocated - vacationTaken
 //    }
-    var vacationRemaining: Int {
-        get {
-            vacationAllocated - vacationTaken
-        }
-
-        set {
-            vacationAllocated = vacationTaken + newValue
-        }
-    }
-}
+//    var vacationRemaining: Int {
+//        get {
+//            vacationAllocated - vacationTaken
+//        }
+//
+//        set {
+//            vacationAllocated = vacationTaken + newValue
+//        }
+//    }
+//}
 //
 //var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
 //archer.vacationTaken += 4
 //print(archer.vacationRemaining)
 //archer.vacationTaken += 4
 //print(archer.vacationRemaining)
-
-
-var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
-archer.vacationTaken += 4
-archer.vacationRemaining = 5
-print(archer.vacationAllocated)
+//
+//
+//var archer = Employee(name: "Sterling Archer", vacationAllocated: 14)
+//archer.vacationTaken += 4
+//archer.vacationRemaining = 5
+//print(archer.vacationAllocated)
 
 
 ///  Día 11 – Control de acceso, propiedades y métodos estáticos y punto de control 6
@@ -907,7 +907,7 @@ struct Unwrap {
 
 ///Punto de control 6
 
-struct Car {
+struct Car1 {
 
     let model: String
     let numberOfSeats: Int
@@ -953,7 +953,7 @@ struct Car {
 }
 
 // Uso de la estructura
-var myCar = Car(model: "Toyota Corolla", numberOfSeats: 5, currentGear: 3)
+var myCar = Car1(model: "Toyota Corolla", numberOfSeats: 5, currentGear: 3)
 print("Marcha actual: \(myCar.getCurrentGear())")
 
 myCar.shiftUp()
@@ -1020,7 +1020,7 @@ novall.printSummary()
 
 // Cómo agregar inicializadores para clases
 
-class Vehicle {
+class Vehicle1 {
     let isElectric: Bool
 
     init(isElectric: Bool) {
@@ -1028,7 +1028,7 @@ class Vehicle {
     }
 }
 
-class Carro: Vehicle {
+class Carro: Vehicle1 {
     let isConvertible: Bool
 
     init(isElectric: Bool, isConvertible: Bool) {
@@ -1187,3 +1187,250 @@ persian.speak()
 
 let lion = Lion(Domesticable: false)
 lion.speak()
+
+
+/// Día 13 – Protocolos, extensiones y punto de control 8
+///
+///
+protocol Vehicle {
+    func estimateTime(for distance: Int) -> Int
+    func travel(distance: Int)
+}
+
+
+struct Car: Vehicle {
+    func estimateTime(for distance: Int) -> Int {
+        distance / 50
+    }
+
+    func travel(distance: Int) {
+        print("I'm driving \(distance)km.")
+    }
+
+    func openSunroof() {
+        print("It's a nice day!")
+    }
+}
+
+func commute(distance: Int, using vehicle: Vehicle) {
+//func commute(distance: Int, using vehicle: Car) {
+    if vehicle.estimateTime(for: distance) > 100 {
+        print("That's too slow! I'll try a different vehicle.")
+    } else {
+        vehicle.travel(distance: distance)
+    }
+}
+
+let car = Car()
+commute(distance: 100, using: car)
+
+
+struct Bicycle: Vehicle {
+    func estimateTime(for distance: Int) -> Int {
+        distance / 10
+    }
+
+    func travel(distance: Int) {
+        print("I'm cycling \(distance)km.")
+    }
+}
+
+let bike = Bicycle()
+commute(distance: 50, using: bike)
+
+protocol Vehicle2 {
+    var name: String { get }
+    var currentPassengers: Int { get set }
+    func estimateTime(for distance: Int) -> Int
+    func travel(distance: Int)
+}
+//let name = "Car"
+//var currentPassengers = 1
+//
+//let name = "Bicycle"
+//var currentPassengers = 1
+//
+//
+//let name = "Bicycle"
+//var currentPassengers = 1
+
+//func getTravelEstimates(using vehicles: [Vehicle], distance: Int) {
+//    for vehicle2 in vehicles {
+//        let estimate = vehicle2.estimateTime(for: distance)
+//        print("\(vehicle2.name): \(estimate) hours to travel \(distance)km")
+//    }
+//}
+
+// Cómo utilizar tipos de devolución opacos
+
+//func getRandomNumber() -> Int {
+//    Int.random(in: 1...6)
+//}
+//
+//func getRandomBool() -> Bool {
+//    Bool.random()
+//}
+
+func getRandomNumber() -> some Equatable {
+    Int.random(in: 1...6)
+}
+
+func getRandomBool() -> some Equatable {
+    Bool.random()
+}
+
+
+getRandomNumber()
+getRandomBool()
+print(getRandomNumber() == getRandomNumber())
+
+
+
+//Cómo crear y usar extensiones
+var quote = "   The truth is rarely pure and never simple   "
+//let trimmed = quote.trimmingCharacters(in: .whitespacesAndNewlines)
+
+extension String {
+    func trimmed() -> String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    var lines: [String] {
+        self.components(separatedBy: .newlines)
+    }
+}
+
+let trimmed = quote.trimmed()
+
+
+let lyrics = """
+But I keep cruising
+Can't stop, won't stop moving
+It's like I got this music in my mind
+Saying it's gonna be alright
+"""
+
+print(lyrics.lines.count)
+
+
+struct Book {
+    let title: String
+    let pageCount: Int
+    let readingHours: Int
+}
+//
+//let lotr = Book(title: "Lord of the Rings", pageCount: 1178, readingHours: 24)
+//
+
+//struct Book{
+//    let title: String
+//    let pageCount: Int
+//    let readingHours: Int
+//    
+//    init(title: String, pageCount: Int){
+//        self.title = title
+//        self.pageCount = pageCount
+//        self.readingHours = pageCount / 50
+//        
+//    }
+//}
+//
+
+extension Book {
+    init(title: String, pageCount: Int) {
+        self.title = title
+        self.pageCount = pageCount
+        self.readingHours = pageCount / 50
+    }
+}
+
+let lotr = Book(title: "Lord of the Rings", pageCount: 1178, readingHours: 24)
+//Book(title: <#T##String#>, pageCount: <#T##Int#>)
+
+
+//Cómo crear y utilizar extensiones de protocolo
+
+//extension Array {
+//    var isNotEmpty: Bool {
+//        isEmpty == false
+//    }
+//}
+//
+//
+//
+//let guests = ["Mario", "Luigi", "Peach"]
+//
+////if guests.isEmpty == false {
+////if !guests.isEmpty {
+//if guests.isNotEmpty {
+//    print("Gest count: \(guests.count)")
+//}
+extension Collection {
+    var isNotEmpty: Bool {
+        isEmpty == false
+    }
+}
+
+let guests = ["Mario", "Luigi", "Peach"]
+
+if guests.isNotEmpty {
+    print("Gest count: \(guests.count)")
+}
+
+protocol Person {
+    var name: String { get }
+    func sayHello()
+}
+
+extension Person {
+    func sayHello() {
+        print("Hi, I'm \(name)")
+    }
+}
+
+struct Employee: Person {
+    let name: String
+}
+
+let taylor = Employee(name: "Taylor Swift")
+taylor.sayHello()
+
+
+/// Punto de control 8
+///
+
+
+protocol Building {
+    var numberOfRooms: Int { get set }
+    var cost: Int { get set }
+    var realtorName: String { get set }
+    
+    func salesSummary()
+}
+
+
+struct House: Building {
+    var numberOfRooms: Int
+    var cost: Int
+    var realtorName: String
+    
+    func salesSummary() {
+        print("Esta casa tiene \(numberOfRooms) habitaciones, cuesta $\(cost), y está siendo vendida por \(realtorName).")
+    }
+}
+
+struct Office: Building {
+    var numberOfRooms: Int
+    var cost: Int
+    var realtorName: String
+    
+    func salesSummary() {
+        print("Esta oficina tiene \(numberOfRooms) habitaciones, cuesta $\(cost), y está siendo vendida por \(realtorName).")
+    }
+}
+
+
+let myHouse = House(numberOfRooms: 4, cost: 350000, realtorName: "Juanito Robledo")
+myHouse.salesSummary()
+
+let myOffice = Office(numberOfRooms: 10, cost: 1000000, realtorName: "Karen Anastacia")
+myOffice.salesSummary()
